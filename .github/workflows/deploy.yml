@@ -1,0 +1,114 @@
+# Publication de L'Atelier du Prof (adp.latelieraugmente.fr).
+#
+# L'Atelier du Prof est le MÊME site que L'Atelier des Maths (même code, mêmes comptes, même base) :
+# ouvert sur adp.latelieraugmente.fr, il se présente sans les contenus de maths (adp.js du dépôt
+# atelier-des-maths). Ce workflow reprend donc le code de oguyot-ataug/atelier-des-maths, y ajoute
+# la page de présentation de ce dépôt (servie sur /decouvrir/) et publie le tout.
+#
+# Déclenché à chaque modification de ce dépôt, à la main (onglet Actions), et toutes les 15 minutes
+# pour suivre les nouvelles versions du site des maths (publication seulement si quelque chose a
+# changé).
+#
+# Réglage nécessaire : Settings > Pages > Source : « GitHub Actions ».
+name: Publication de L'Atelier du Prof
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      publier: ${{ steps.version.outputs.publier }}
+    steps:
+      - name: Page de présentation (ce dépôt)
+        uses: actions/checkout@v4
+        with:
+          path: adp
+      - name: Code du site (L'Atelier des Maths)
+        uses: actions/checkout@v4
+        with:
+          repository: oguyot-ataug/atelier-des-maths
+          ref: main
+          path: maths
+      - name: Quelque chose a-t-il changé depuis la dernière publication ?
+        id: version
+        run: |
+          v="maths=$(git -C maths rev-parse HEAD) adp=$(git -C adp rev-parse HEAD)"
+          echo "$v" > version.txt
+          enligne=$(curl -fsS "https://adp.latelieraugmente.fr/version-adp.txt?t=$(date +%s)" 2>/dev/null || true)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$enligne" = "$v" ]; then
+            echo "Rien de nouveau ($v)."; echo "publier=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "À publier : $v (en ligne : ${enligne:-aucune})"; echo "publier=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Assemblage
+        if: steps.version.outputs.publier == 'true'
+        run: |
+          mkdir _site
+          # Le site, sans ce qui ne concerne que les maths : pages de cours pour Google, tarifs, sitemap.
+          rsync -a --exclude='.git' --exclude='.github' --exclude='CNAME' --exclude='CLAUDE.md' --exclude='robots.txt' --exclude='sitemap.xml' \
+            --exclude='/cm1' --exclude='/cm2' --exclude='/6e' --exclude='/5e' --exclude='/4e' --exclude='/3e' \
+            --exclude='/professeurs' --exclude='/tarifs' --exclude='/tools' --exclude='/supabase' --exclude='/learn*.png' \
+            maths/ _site/
+          # Page de présentation : /decouvrir/ (ses images dans /img/).
+          mkdir -p _site/decouvrir
+          sed -e 's#src="img/#src="/img/#g' -e 's#href="img/#href="/img/#g' -e 's#content="https://adp.latelieraugmente.fr/"#content="https://adp.latelieraugmente.fr/decouvrir/"#' \
+              -e 's#<link rel="canonical" href="https://adp.latelieraugmente.fr/">#<link rel="canonical" href="https://adp.latelieraugmente.fr/decouvrir/">#' \
+              adp/index.html > _site/decouvrir/index.html
+          cp -r adp/img _site/img
+          # Ce que voient les moteurs de recherche et les réseaux sociaux sur la page d'accueil.
+          python3 - <<'PY'
+          import re
+          p = '_site/index.html'; s = open(p, encoding='utf-8').read()
+          titre = "L'Atelier du Prof · Les outils du professeur, quelle que soit sa matière"
+          desc = "Quiz, interrogations en ligne, corrections, séances en direct, cahier de la classe : les outils du professeur, conçus et éprouvés en classe, pour toutes les matières."
+          s = re.sub(r'<title>.*?</title>', '<title>' + titre + '</title>', s, count=1)
+          s = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="' + desc + '">', s, count=1)
+          s = re.sub(r'<link rel="canonical" href="[^"]*">', '<link rel="canonical" href="https://adp.latelieraugmente.fr/">', s, count=1)
+          s = re.sub(r'<meta property="og:site_name" content="[^"]*">', '<meta property="og:site_name" content="L\'Atelier du Prof">', s, count=1)
+          s = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="' + titre.replace('"', '&quot;') + '">', s, count=1)
+          s = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="' + desc + '">', s, count=1)
+          s = re.sub(r'<meta property="og:url" content="[^"]*">', '<meta property="og:url" content="https://adp.latelieraugmente.fr/">', s, count=1)
+          s = re.sub(r'<meta property="og:image" content="[^"]*">', '<meta property="og:image" content="https://adp.latelieraugmente.fr/img/og-image.png">', s, count=1)
+          s = re.sub(r'<link rel="icon"[^>]*>', '<link rel="icon" type="image/png" href="assets/adp/favicon-64.png">', s, count=1)
+          s = re.sub(r'<script type="application/ld\+json">.*?</script>', '', s, flags=re.S)
+          open(p, 'w', encoding='utf-8').write(s)
+          PY
+          printf 'User-agent: *\nAllow: /\nSitemap: https://adp.latelieraugmente.fr/sitemap.xml\n' > _site/robots.txt
+          printf '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n<url><loc>https://adp.latelieraugmente.fr/</loc></url>\n<url><loc>https://adp.latelieraugmente.fr/decouvrir/</loc></url>\n</urlset>\n' > _site/sitemap.xml
+          echo adp.latelieraugmente.fr > _site/CNAME
+          cp version.txt _site/version-adp.txt
+      - name: Configuration de Pages
+        if: steps.version.outputs.publier == 'true'
+        uses: actions/configure-pages@v5
+      - name: Empaquetage
+        if: steps.version.outputs.publier == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.publier == 'true'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publication
+        id: deployment
+        uses: actions/deploy-pages@v4
