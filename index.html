@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'Atelier du Prof — les outils du professeur, pour toutes les matières</title>
+<meta name="description" content="L'Atelier du Prof réunit les outils du professeur conçus et éprouvés en classe : cahier de la classe, devoirs corrigés, interrogations en ligne, séances en direct, bilans. Premier module disponible : L'Atelier des Maths, du CM1 à la 3e.">
+<link rel="canonical" href="https://adp.latelieraugmente.fr/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="L'Atelier du Prof">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="L'Atelier du Prof — Inspirer, Transmettre, Réussir">
+<meta property="og:description" content="Les outils du professeur, conçus et éprouvés en classe, pour toutes les matières. Premier module : L'Atelier des Maths, du CM1 à la 3e.">
+<meta property="og:url" content="https://adp.latelieraugmente.fr/">
+<meta property="og:image" content="https://adp.latelieraugmente.fr/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" sizes="64x64" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"L'Atelier du Prof","url":"https://adp.latelieraugmente.fr/","inLanguage":"fr","publisher":{"@type":"Organization","name":"L'Atelier Augmenté","url":"https://www.latelieraugmente.fr/"}}</script>
+<style>
+  :root{
+    --bleu:#1F5FA8; --bleu-fonce:#173F70; --orange:#F29A1F; --orange-fonce:#C9700A; --turquoise:#1AA3B3;
+    --encre:#1C2433; --doux:#4E5868; --fond:#FBFAF5; --carte:#FFFFFF; --bord:rgba(23,63,112,.12);
+    --ombre:0 2px 10px rgba(23,63,112,.07), 0 1px 2px rgba(23,63,112,.06);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--fond);color:var(--encre);font:400 16px/1.65 Inter,system-ui,sans-serif;}
+  a{color:var(--bleu);}
+  h1,h2,h3{font-family:Montserrat,system-ui,sans-serif;color:var(--bleu-fonce);line-height:1.15;margin:0;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
+
+  /* En-tête */
+  header{position:sticky;top:0;z-index:10;background:rgba(251,250,245,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--bord);}
+  .tete{display:flex;align-items:center;gap:16px;height:64px;}
+  .marque{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--bleu-fonce);font:800 1.05rem Montserrat,sans-serif;letter-spacing:-.01em;white-space:nowrap;}
+  .marque img{height:40px;width:auto;}
+  nav{display:flex;gap:4px;margin-left:auto;align-items:center;}
+  nav a{text-decoration:none;color:var(--encre);font-weight:600;font-size:.92rem;padding:8px 12px;border-radius:8px;}
+  nav a:hover{background:rgba(31,95,168,.07);}
+  .btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:700 .95rem Montserrat,sans-serif;padding:12px 20px;border-radius:10px;border:2px solid transparent;cursor:pointer;}
+  .btn-plein{background:var(--bleu);color:#fff;} .btn-plein:hover{background:var(--bleu-fonce);}
+  .btn-orange{background:var(--orange);color:#fff;} .btn-orange:hover{background:var(--orange-fonce);}
+  .btn-ligne{border-color:var(--bleu);color:var(--bleu);background:transparent;} .btn-ligne:hover{background:rgba(31,95,168,.06);}
+  nav .btn{padding:8px 14px;font-size:.85rem;margin-left:6px;}
+
+  /* Accueil */
+  .hero{padding:56px 0 40px;}
+  .hero .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:48px;align-items:center;}
+  .hero-logo{width:100%;max-width:380px;justify-self:center;}
+  .devise{display:inline-block;font:700 .78rem Montserrat,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--orange-fonce);background:rgba(242,154,31,.12);padding:5px 12px;border-radius:999px;margin-bottom:16px;}
+  .hero h1{font-size:clamp(2rem,4.2vw,3.1rem);font-weight:800;letter-spacing:-.02em;margin-bottom:18px;}
+  .hero h1 em{font-style:normal;color:var(--orange);}
+  .hero p.lead{font-size:1.1rem;color:var(--doux);margin:0 0 26px;max-width:56ch;}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+  /* Bandeau maths */
+  .deja{background:var(--bleu-fonce);color:#fff;}
+  .deja .wrap{display:flex;align-items:center;gap:20px;padding-top:22px;padding-bottom:22px;flex-wrap:wrap;}
+  .deja p{margin:0;flex:1;min-width:260px;color:rgba(255,255,255,.88);}
+  .deja b{color:#fff;}
+  .deja .chiffres{display:flex;gap:26px;flex-wrap:wrap;}
+  .deja .chiffre{font:800 1.6rem Montserrat,sans-serif;color:var(--orange);line-height:1;}
+  .deja .chiffre small{display:block;font:500 .75rem Inter,sans-serif;color:rgba(255,255,255,.7);margin-top:4px;}
+
+  /* Sections */
+  section.bloc{padding:72px 0;}
+  section.bloc.alt{background:#F3F1E8;}
+  .titre-sec{max-width:760px;margin-bottom:36px;}
+  .etiquette{display:block;font:700 .75rem Montserrat,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--turquoise);margin-bottom:10px;}
+  .titre-sec h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.015em;margin-bottom:12px;}
+  .titre-sec p{color:var(--doux);margin:0;}
+
+  .temps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;}
+  .temps > div h3{font-size:1.05rem;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .temps > div h3 span{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;color:#fff;}
+  .t1 h3 span{background:var(--turquoise);} .t2 h3 span{background:var(--orange);} .t3 h3 span{background:var(--bleu);}
+  .outil{background:var(--carte);border:1px solid var(--bord);border-radius:12px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--ombre);}
+  .outil b{display:block;font:700 .98rem Montserrat,sans-serif;color:var(--bleu-fonce);margin-bottom:4px;}
+  .outil p{margin:0;font-size:.9rem;color:var(--doux);line-height:1.55;}
+
+  .plus{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:28px;}
+  .plus div{border-top:3px solid var(--orange);padding-top:12px;}
+  .plus b{display:block;font:700 .95rem Montserrat,sans-serif;color:var(--bleu-fonce);margin-bottom:4px;}
+  .plus p{margin:0;font-size:.88rem;color:var(--doux);}
+
+  /* Matières */
+  .matieres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+  .matiere{background:var(--carte);border:1px solid var(--bord);border-radius:14px;padding:22px;box-shadow:var(--ombre);display:flex;flex-direction:column;}
+  .matiere .etat{align-self:flex-start;font:700 .7rem Montserrat,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:12px;background:#ECEFF4;color:var(--doux);}
+  .matiere.dispo{border:2px solid var(--bleu);}
+  .matiere.dispo .etat{background:#E3F4EA;color:#1F7A4D;}
+  .matiere h3{font-size:1.15rem;margin-bottom:8px;}
+  .matiere p{margin:0 0 14px;font-size:.92rem;color:var(--doux);flex:1;}
+  .matiere a{font-weight:700;text-decoration:none;}
+  .noyau{margin-top:28px;background:var(--carte);border:1px dashed rgba(23,63,112,.3);border-radius:14px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start;}
+  .noyau img{width:56px;flex:none;}
+  .noyau p{margin:0;color:var(--doux);}
+  .noyau b{color:var(--bleu-fonce);}
+
+  /* Être prévenu */
+  .prevenu{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start;}
+  form{background:var(--carte);border:1px solid var(--bord);border-radius:14px;padding:24px;box-shadow:var(--ombre);display:grid;gap:14px;}
+  label{display:grid;gap:6px;font-weight:600;font-size:.9rem;color:var(--bleu-fonce);}
+  input,select,textarea{font:inherit;font-size:.95rem;padding:10px 12px;border:1.5px solid rgba(23,63,112,.2);border-radius:9px;background:#fff;color:var(--encre);width:100%;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(31,95,168,.15);}
+  .petit{font-size:.82rem;color:var(--doux);margin:0;}
+  .cases{display:flex;flex-wrap:wrap;gap:8px;}
+  .cases label{display:inline-flex;align-items:center;gap:6px;font-weight:500;color:var(--encre);background:#F5F6F9;border-radius:8px;padding:6px 10px;cursor:pointer;}
+  .cases input{width:auto;margin:0;}
+
+  footer{background:var(--bleu-fonce);color:rgba(255,255,255,.8);padding:34px 0;font-size:.88rem;}
+  footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+  footer a{color:#fff;}
+
+  @media (max-width:900px){
+    .hero .wrap,.prevenu{grid-template-columns:1fr;}
+    .hero-logo{max-width:280px;}
+    .temps,.matieres{grid-template-columns:1fr;}
+    .plus{grid-template-columns:repeat(2,minmax(0,1fr));}
+    nav a:not(.btn){display:none;}
+  }
+  @media (max-width:520px){
+    .plus{grid-template-columns:1fr;}
+    .marque span{display:none;}
+    section.bloc{padding:52px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap tete">
+    <a class="marque" href="#"><img src="img/logo-adp-mark.png" alt=""><span>L'Atelier du Prof</span></a>
+    <nav>
+      <a href="#outils">Les outils</a>
+      <a href="#matieres">Les matières</a>
+      <a href="#prevenu">Être prévenu</a>
+      <a class="btn btn-plein" href="https://maths.latelieraugmente.fr" target="_blank" rel="noopener">L'Atelier des Maths</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <img class="hero-logo" src="img/logo-adp.png" alt="L'Atelier du Prof — Inspirer, Transmettre, Réussir">
+    <div>
+      <span class="devise">Inspirer · Transmettre · Réussir</span>
+      <h1>Les outils du professeur, <em>pour toutes les matières</em></h1>
+      <p class="lead">Préparer ses cours, faire classe en direct, donner des devoirs corrigés tout seuls, suivre chaque élève : L'Atelier du Prof réunit des outils conçus par un professeur et éprouvés chaque semaine en classe avec L'Atelier des Maths, et les ouvre à toutes les disciplines.</p>
+      <div class="actions">
+        <a class="btn btn-plein" href="#outils">Découvrir les outils</a>
+        <a class="btn btn-ligne" href="#prevenu">Être prévenu pour ma matière</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="deja">
+  <div class="wrap">
+    <p><b>Déjà en classe :</b> le premier module, L'Atelier des Maths, est utilisé depuis la rentrée 2026, avec tous ces outils.</p>
+    <div class="chiffres">
+      <div class="chiffre">CM1→3e<small>niveaux couverts</small></div>
+      <div class="chiffre">119<small>chapitres de cours</small></div>
+    </div>
+  </div>
+</div>
+
+<section class="bloc" id="outils">
+  <div class="wrap">
+    <div class="titre-sec">
+      <span class="etiquette">Les outils communs</span>
+      <h2>Avant, pendant et après la classe</h2>
+      <p>Ces outils ne dépendent d'aucune matière : ils fonctionnent avec vos cours, vos exercices et vos classes.</p>
+    </div>
+    <div class="temps">
+      <div class="t1">
+        <h3><span>1</span>Préparer</h3>
+        <div class="outil"><b>Cours personnalisables</b><p>Chaque professeur masque, déplace, réécrit ou complète le cours ; ses élèves voient sa version, et il peut la partager avec ses collègues.</p></div>
+        <div class="outil"><b>Évaluations en quelques minutes</b><p>Exercices proposés par l'IA, barème, mise en page : la copie est prête à imprimer.</p></div>
+        <div class="outil"><b>Interrogations et entraînements en ligne</b><p>QCM, réponses courtes, questions ouvertes, photo de copie ; en interrogation notée ou en entraînement où l'élève réessaie.</p></div>
+      </div>
+      <div class="t2">
+        <h3><span>2</span>Faire classe</h3>
+        <div class="outil"><b>Séances en direct</b><p>Une télécommande pour faire avancer la classe ou la laisser libre, voir chaque copie en direct, prendre la main sur celle d'un élève, lui envoyer un mot d'aide.</p></div>
+        <div class="outil"><b>Questions flash avec les cartes</b><p>Chaque élève lève sa carte A, B, C ou D : le téléphone du professeur lit toute la classe d'un coup, sans ordinateur pour les élèves.</p></div>
+        <div class="outil"><b>Correction projetée et caméra du téléphone</b><p>Le cahier d'un élève filmé, projeté au tableau, annoté, puis gardé dans le cahier de la classe, que chaque élève retrouve jour après jour.</p></div>
+      </div>
+      <div class="t3">
+        <h3><span>3</span>Suivre</h3>
+        <div class="outil"><b>Devoirs corrigés tout seuls</b><p>Médailles, nombre d'essais et temps de travail réel de chaque élève, sans rien corriger à la main.</p></div>
+        <div class="outil"><b>Correction et carnet de notes</b><p>Copie par copie ou question par question, avec l'aide de l'IA pour les questions ouvertes ; les résultats vont à l'élève et au carnet de notes.</p></div>
+        <div class="outil"><b>Bilans</b><p>Après chaque séance : qui a réussi quoi, mains levées, sorties de la page. Pour la classe : la progression de chacun sur l'année.</p></div>
+      </div>
+    </div>
+    <div class="plus">
+      <div><b>Apprendre ses leçons</b><p>Réciter une définition à voix haute, remettre ses mots dans l'ordre : l'élève apprend en jouant.</p></div>
+      <div><b>Comptes élèves simples</b><p>Créés par le professeur, sans adresse e-mail : identifiant et mot de passe, rien de plus.</p></div>
+      <div><b>IA facultative</b><p>Tout fonctionne sans elle ; elle fait gagner du temps quand on la souhaite.</p></div>
+      <div><b>Données en Europe</b><p>Comptes et résultats hébergés dans l'Union européenne.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bloc alt" id="matieres">
+  <div class="wrap">
+    <div class="titre-sec">
+      <span class="etiquette">Les matières</span>
+      <h2>Un noyau commun, un module par matière</h2>
+      <p>Chaque module apporte les cours et les exercices de sa discipline, et ses outils propres. Les outils communs, eux, sont les mêmes pour tous.</p>
+    </div>
+    <div class="matieres">
+      <div class="matiere dispo">
+        <span class="etat">Disponible</span>
+        <h3>Mathématiques</h3>
+        <p>L'Atelier des Maths, du CM1 à la 3e : cours complets, méthodes animées, figures construites pas à pas aux instruments, géométrie dynamique, automatismes, manuel d'exercices.</p>
+        <a href="https://maths.latelieraugmente.fr" target="_blank" rel="noopener">Ouvrir L'Atelier des Maths →</a>
+      </div>
+      <div class="matiere">
+        <span class="etat">En réflexion</span>
+        <h3>Sciences</h3>
+        <p>SVT, physique-chimie, technologie : schémas à légender, protocoles, mesures et graphiques, programmation par blocs.</p>
+        <a href="#prevenu" data-matiere="Sciences">Être prévenu →</a>
+      </div>
+      <div class="matiere">
+        <span class="etat">En réflexion</span>
+        <h3>Français</h3>
+        <p>Lecture, grammaire, orthographe, rédaction : analyse de phrase, dictées, textes à annoter.</p>
+        <a href="#prevenu" data-matiere="Français">Être prévenu →</a>
+      </div>
+      <div class="matiere">
+        <span class="etat">En réflexion</span>
+        <h3>Histoire-géographie et EMC</h3>
+        <p>Frises chronologiques, cartes à compléter, documents à analyser.</p>
+        <a href="#prevenu" data-matiere="Histoire-géographie et EMC">Être prévenu →</a>
+      </div>
+      <div class="matiere">
+        <span class="etat">En réflexion</span>
+        <h3>Langues vivantes</h3>
+        <p>Vocabulaire, compréhension orale et écrite, expression.</p>
+        <a href="#prevenu" data-matiere="Langues vivantes">Être prévenu →</a>
+      </div>
+      <div class="matiere">
+        <span class="etat">À vous de nous dire</span>
+        <h3>Une autre matière ?</h3>
+        <p>Dites-nous laquelle : les matières les plus demandées passeront en premier.</p>
+        <a href="#prevenu" data-matiere="Autre">Proposer une matière →</a>
+      </div>
+    </div>
+    <div class="noyau">
+      <img src="img/logo-adp-mark.png" alt="">
+      <p><b>Pour un établissement :</b> une seule licence pour toute l'équipe. Chaque professeur retrouve les outils communs, et le module de sa matière dès qu'il est disponible.</p>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" id="prevenu">
+  <div class="wrap prevenu">
+    <div class="titre-sec">
+      <span class="etiquette">Être prévenu</span>
+      <h2>Votre matière vous intéresse ?</h2>
+      <p>Laissez-nous votre adresse et votre matière : nous vous écrirons quand son module sera prêt, et nous vous proposerons peut-être de le tester en avant-première dans votre classe.</p>
+      <p style="margin-top:14px;">Vous enseignez les mathématiques ? <a href="https://maths.latelieraugmente.fr" target="_blank" rel="noopener">L'Atelier des Maths est déjà ouvert</a>.</p>
+    </div>
+    <form id="formPrevenu">
+      <label>Votre adresse e-mail<input type="email" id="fEmail" required autocomplete="email" placeholder="prenom.nom@exemple.fr"></label>
+      <label>Votre matière
+        <select id="fMatiere" required>
+          <option value="">Choisir…</option>
+          <option>Sciences (SVT, physique-chimie, technologie)</option>
+          <option>Français</option>
+          <option>Histoire-géographie et EMC</option>
+          <option>Langues vivantes</option>
+          <option>Professeur des écoles (toutes matières)</option>
+          <option>Autre</option>
+        </select>
+      </label>
+      <div><span class="petit" style="font-weight:600;color:var(--bleu-fonce);">Vos niveaux</span>
+        <div class="cases" id="fNiveaux" style="margin-top:6px;">
+          <label><input type="checkbox" value="École">École</label>
+          <label><input type="checkbox" value="6e">6e</label>
+          <label><input type="checkbox" value="5e">5e</label>
+          <label><input type="checkbox" value="4e">4e</label>
+          <label><input type="checkbox" value="3e">3e</label>
+          <label><input type="checkbox" value="Lycée">Lycée</label>
+        </div>
+      </div>
+      <label>Un message <span class="petit" style="display:inline;">(facultatif : l'outil qui vous manque le plus…)</span><textarea id="fMessage" rows="3"></textarea></label>
+      <button class="btn btn-orange" type="submit">Être prévenu</button>
+      <p class="petit">Votre messagerie s'ouvre avec le message prêt à envoyer à contact@latelieraugmente.fr. Votre adresse ne sert qu'à vous prévenir.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>L'Atelier du Prof est une création de <a href="https://www.latelieraugmente.fr" target="_blank" rel="noopener">L'Atelier Augmenté</a>.</span>
+    <span><a href="mailto:contact@latelieraugmente.fr">contact@latelieraugmente.fr</a> · <a href="https://www.latelieraugmente.fr/mentions.html" target="_blank" rel="noopener">Mentions légales</a></span>
+  </div>
+</footer>
+
+<script>
+  // « Être prévenu → » d'une matière : la matière est présélectionnée dans le formulaire.
+  document.querySelectorAll('[data-matiere]').forEach(a => a.addEventListener('click', () => {
+    const v = a.dataset.matiere, s = document.getElementById('fMatiere');
+    const o = [...s.options].find(x => x.value.startsWith(v) || x.textContent.startsWith(v));
+    if (o) s.value = o.value;
+  }));
+  // Pas encore de base de données ici : le message part de la messagerie de l'enseignant.
+  document.getElementById('formPrevenu').addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('fEmail').value.trim();
+    const matiere = document.getElementById('fMatiere').value;
+    const niveaux = [...document.querySelectorAll('#fNiveaux input:checked')].map(x => x.value).join(', ') || 'non précisés';
+    const msg = document.getElementById('fMessage').value.trim();
+    const corps = `Bonjour,\n\nJe souhaite être prévenu(e) de l'ouverture de L'Atelier du Prof pour ma matière.\n\nMatière : ${matiere}\nNiveaux : ${niveaux}\nAdresse : ${email}${msg ? `\n\nMessage : ${msg}` : ''}\n`;
+    location.href = 'mailto:contact@latelieraugmente.fr?subject=' + encodeURIComponent("L'Atelier du Prof : " + matiere) + '&body=' + encodeURIComponent(corps);
+  });
+</script>
+</body>
+</html>
